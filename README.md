@@ -2,3 +2,4 @@
 
 https://www.lambdatest.com/certifications/selenium-101
 https://mvnrepository.com/
+https://googlechromelabs.github.io/chrome-for-testing/
