@@ -1,9 +1,7 @@
 import io.github.cdimascio.dotenv.Dotenv;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -69,11 +67,35 @@ public class WindowsHandling {
 
         driver.switchTo().window(parentWindow);
         System.out.println("Back to Parent window " + driver.getTitle());
-        
+
         //Close all Tabs
         driver.quit();
 
     }
+
+    @Test
+    public void iframeValidate(){
+        driver.get("https://www.lambdatest.com/selenium-playground/iframe-demo/");
+        driver.switchTo().frame("iFrame1");
+
+        driver.findElement(By.xpath("//div[text()='Your content.']")).sendKeys("IFrame");
+
+        driver.switchTo().parentFrame();
+        driver.switchTo().frame("iFrame2");
+        driver.findElement(By.linkText("API Reference")).click();
+        driver.findElement(By.linkText("FAQ")).click();
+
+        //It goes to Parent frame, Not to default content ,If you are at 2 iframes inside , it goes to first iframe
+        driver.switchTo().parentFrame();
+
+        //But going to default content, irrespective of IFrame use
+        driver.switchTo().defaultContent();
+
+        //Close all Tabs
+        driver.quit();
+
+    }
+
     @AfterTest
     public void tearDown(){
         driver.quit();
